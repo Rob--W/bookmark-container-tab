@@ -1,0 +1,17 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "webextensions": true
+    },
+    "rules": {
+        "max-len": [2, {
+            "code": 100,
+            "ignoreUrls": true
+        }]
+    }
+}

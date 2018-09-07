@@ -1,0 +1,21 @@
+{
+    "name": "Open bookmark in Container Tab menu item",
+    "description": "Add 'Open in Container Tab' menu item to bookmarks",
+    "version": "1",
+    "manifest_version": 2,
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "permissions": [
+        "bookmarks",
+        "contextualIdentities",
+        "cookies",
+        "menus"
+    ],
+    "applications": {
+        "gecko": {
+            "id": "bookmark-menu-container@robwu.nl",
+            "strict_min_version": "62.0"
+        }
+    }
+}
