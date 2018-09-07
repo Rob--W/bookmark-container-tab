@@ -30,8 +30,6 @@ browser.menus.onClicked.addListener(async (info, tab) => {
     }
 });
 
-// TODO: Implement method without onShown because the event does not work for
-// "bookmark" contexts prior Firefox 62: https://bugzil.la/1473720
 browser.menus.onShown.addListener(async (info) => {
     if (info.contexts.includes("bookmark")) {
         // TODO: Set "visible" or "disabled" to false if not a bookmark or
@@ -39,6 +37,17 @@ browser.menus.onShown.addListener(async (info) => {
 
         await updateBookmarkMenuItems();
         browser.menus.refresh();
+    }
+});
+
+browser.runtime.getBrowserInfo().then(({version}) => {
+    if (/^6[01]\./.test(version)) {
+        // Firefox 60 and 61 have a bug, where onShown does not work - https://bugzil.la/1473720
+        // As a work-around, update the menus when the identities change:
+        browser.contextualIdentities.onCreated.addListener(updateBookmarkMenuItems);
+        browser.contextualIdentities.onUpdated.removeListener(updateBookmarkMenuItems);
+        browser.contextualIdentities.onRemoved.hasListener(updateBookmarkMenuItems);
+        updateBookmarkMenuItems();
     }
 });
 
