@@ -6,7 +6,7 @@ createRootMenuItems();
 
 let lastIds = [];
 
-browser.menus.onClicked.addListener(async (info, tab) => {
+browser.menus.onClicked.addListener(async (info) => {
     let [bookmark] = await browser.bookmarks.get(info.bookmarkId);
     let urls = [];
     if (bookmark.url) {
