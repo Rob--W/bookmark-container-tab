@@ -5,6 +5,7 @@ const BOOKMARK_MENU_ITEM_ID = "bookmark-menu-item";
 createRootMenuItems();
 
 let lastIds = [];
+let lastIsVisible = true;
 
 browser.menus.onClicked.addListener(async (info) => {
     let [bookmark] = await browser.bookmarks.get(info.bookmarkId);
@@ -20,8 +21,6 @@ browser.menus.onClicked.addListener(async (info) => {
         throw new Error("No URLs found in the bookmark");
     }
 
-    // TODO: Open new non-private window if current window is private.
-
     for (let url of urls) {
         browser.tabs.create({
             url,
@@ -32,9 +31,12 @@ browser.menus.onClicked.addListener(async (info) => {
 
 browser.menus.onShown.addListener(async (info) => {
     if (info.contexts.includes("bookmark")) {
-        // TODO: Set "visible" or "disabled" to false if not a bookmark or
-        // folder (e.g. a separator or the toolbar).
-
+        if (!await shouldEnableMenu(info.bookmarkId)) {
+            toggleRootMenu(false);
+            browser.menus.refresh();
+            return;
+        }
+        toggleRootMenu(true);
         await updateBookmarkMenuItems();
         browser.menus.refresh();
     }
@@ -50,6 +52,47 @@ browser.runtime.getBrowserInfo().then(({version}) => {
         updateBookmarkMenuItems();
     }
 });
+
+async function shouldEnableMenu(bookmarkId) {
+    if (bookmarkId === "toolbar_____") {
+        // The submenu disappears on hover, so let's disable the menu - https://bugzil.la/1489545
+        return false;
+    }
+    let incognito;
+    try {
+        ({incognito} = await browser.windows.getCurrent());
+    } catch (e) {
+        console.warn(`Cannot identify current window: ${e}`);
+    }
+    if (incognito) {
+        // Cannot open container tabs in private browsing mode.
+        return false;
+    }
+    return true;
+}
+
+function toggleRootMenu(visible) {
+    if (lastIsVisible === visible) {
+        return; // No change.
+    }
+    lastIsVisible = visible;
+
+    if (!toggleRootMenu._visibleNotSupported) {
+        try {
+            // "visible" is supported in Firefox 63+ - https://bugzil.la/1482529
+            browser.menus.update(BOOKMARK_MENU_ITEM_ID, {visible});
+            return; // Not thrown? .visible is supported.
+        } catch (e) {
+            toggleRootMenu._visibleNotSupported = true;
+        }
+    }
+    if (visible) {
+        createRootMenuItems();
+    } else {
+        lastIds.length = 0;
+        browser.menus.removeAll();
+    }
+}
 
 function createRootMenuItems() {
     browser.menus.create({
