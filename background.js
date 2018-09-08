@@ -18,11 +18,20 @@ browser.menus.onClicked.addListener(async (info) => {
     // - file:-URLs - https://bugzil.la/1266960
     // - data:-URLs - https://bugzil.la/1317166
     // - about:-URLs (other than about:blank)
-    // TODO: Convert about:reader links?
     for (let url of urls) {
+        let openInReaderMode = url.startsWith("about:reader");
+        if (openInReaderMode) {
+            try {
+                let parsed = new URL(url);
+                url = parsed.searchParams.get("url") + parsed.hash;
+            } catch (e) {
+                console.warn(`Failed to parse: ${url} ${e}`);
+            }
+        }
         browser.tabs.create({
             url,
             cookieStoreId: info.menuItemId,
+            openInReaderMode,
         });
     }
 });
