@@ -109,6 +109,12 @@ function createRootMenuItems() {
         // TODO: i18n.
         title: "No Container",
     });
+    browser.menus.create({
+        id: "separator-after-no-container",
+        type: "separator",
+        parentId: BOOKMARK_MENU_ITEM_ID,
+        contexts: ["bookmark"],
+    });
 }
 
 async function getBookmarkUrls(bookmarkId) {
