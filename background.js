@@ -96,7 +96,7 @@ async function updateBookmarkMenuItems() {
             contexts: ["bookmark"],
             title: cid.name,
             icons: {
-                16: `icons/${cid.icon}.svg`,
+                16: `icons/${cid.icon}.svg#${cid.color}`,
             },
         });
         lastIds.push(cid.cookieStoreId);

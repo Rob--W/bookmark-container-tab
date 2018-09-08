@@ -3,6 +3,22 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <svg xmlns="http://www.w3.org/2000/svg"
      width="32" height="32" viewBox="0 0 32 32">
-  <circle fill="context-fill" cx="16" cy="16" r="16"/>
+  <view id="blue" viewBox="0 32 32 32"/>
+  <use href="#icon" fill="#37adff" x="0" y="32"/>
+  <view id="turquoise" viewBox="0 64 32 32"/>
+  <use href="#icon" fill="#00c79a" x="0" y="64"/>
+  <view id="green" viewBox="0 96 32 32"/>
+  <use href="#icon" fill="#51cd00" x="0" y="96"/>
+  <view id="yellow" viewBox="0 128 32 32"/>
+  <use href="#icon" fill="#ffcb00" x="0" y="128"/>
+  <view id="orange" viewBox="0 160 32 32"/>
+  <use href="#icon" fill="#ff9f00" x="0" y="160"/>
+  <view id="red" viewBox="0 192 32 32"/>
+  <use href="#icon" fill="#ff613d" x="0" y="192"/>
+  <view id="pink" viewBox="0 224 32 32"/>
+  <use href="#icon" fill="#ff4bda" x="0" y="224"/>
+  <view id="purple" viewBox="0 256 32 32"/>
+  <use href="#icon" fill="#af51f5" x="0" y="256"/>
+  <circle id="icon" cx="16" cy="16" r="16"/>
 </svg>
 

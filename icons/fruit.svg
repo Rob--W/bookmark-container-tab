@@ -3,7 +3,23 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <svg xmlns="http://www.w3.org/2000/svg"
      width="32" height="32" viewBox="0 0 32 32">
-  <path fill="context-fill" d="M16.5,8c-2.1-0.9-3.9-1.2-6.6-0.9C4.6,8,1.8,12.6,1.8,18c0,5.9,4.8,14,9.8,14c1.6,0,3.9-1.2,4.4-1.2
+  <view id="blue" viewBox="0 32 32 32"/>
+  <use href="#icon" fill="#37adff" x="0" y="32"/>
+  <view id="turquoise" viewBox="0 64 32 32"/>
+  <use href="#icon" fill="#00c79a" x="0" y="64"/>
+  <view id="green" viewBox="0 96 32 32"/>
+  <use href="#icon" fill="#51cd00" x="0" y="96"/>
+  <view id="yellow" viewBox="0 128 32 32"/>
+  <use href="#icon" fill="#ffcb00" x="0" y="128"/>
+  <view id="orange" viewBox="0 160 32 32"/>
+  <use href="#icon" fill="#ff9f00" x="0" y="160"/>
+  <view id="red" viewBox="0 192 32 32"/>
+  <use href="#icon" fill="#ff613d" x="0" y="192"/>
+  <view id="pink" viewBox="0 224 32 32"/>
+  <use href="#icon" fill="#ff4bda" x="0" y="224"/>
+  <view id="purple" viewBox="0 256 32 32"/>
+  <use href="#icon" fill="#af51f5" x="0" y="256"/>
+  <path id="icon" d="M16.5,8c-2.1-0.9-3.9-1.2-6.6-0.9C4.6,8,1.8,12.6,1.8,18c0,5.9,4.8,14,9.8,14c1.6,0,3.9-1.2,4.4-1.2
   c0.5,0,2.8,1.2,4.4,1.2c5,0,9.8-8.4,9.8-14c0-5.9-3.2-10.8-9.8-10.8C19,7.1,17.8,7.5,16.5,8z M11.7,0c1.1,0.2,3.2,0.9,4.1,2.3
   c0.9,1.4,0.5,3.6,0.2,4.6c-1.2-0.2-3.2-0.7-4.1-2.3C11,3.2,11.4,1.1,11.7,0L11.7,0z"/>
 </svg>
