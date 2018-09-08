@@ -8,19 +8,17 @@ let lastIds = [];
 let lastIsVisible = true;
 
 browser.menus.onClicked.addListener(async (info) => {
-    let [bookmark] = await browser.bookmarks.get(info.bookmarkId);
-    let urls = [];
-    if (bookmark.url) {
-        urls.push(bookmark.url);
-    } else { // bookmark.type === "folder"
-        let bookmarks = await browser.bookmarks.getChildren(bookmark.id);
-        urls = bookmarks.map(b => b.url).filter(url => url);
-    }
+    let {urls} = await getBookmarkUrls(info.bookmarkId);
     if (!urls.length) {
         // E.g. when the bookmark folder is empty.
         throw new Error("No URLs found in the bookmark");
     }
 
+    // TODO: show URL in tab when a URL cannot be opened by extensions?
+    // - file:-URLs - https://bugzil.la/1266960
+    // - data:-URLs - https://bugzil.la/1317166
+    // - about:-URLs (other than about:blank)
+    // TODO: Convert about:reader links?
     for (let url of urls) {
         browser.tabs.create({
             url,
@@ -37,7 +35,10 @@ browser.menus.onShown.addListener(async (info) => {
             return;
         }
         toggleRootMenu(true);
-        await updateBookmarkMenuItems();
+        await Promise.all([
+            updateRootMenuItem(info.bookmarkId),
+            updateBookmarkMenuItems(),
+        ]);
         browser.menus.refresh();
     }
 });
@@ -110,6 +111,44 @@ function createRootMenuItems() {
     });
 }
 
+async function getBookmarkUrls(bookmarkId) {
+    let [bookmark] = await browser.bookmarks.get(bookmarkId);
+    let isFolder = bookmark.type === "folder";
+    let urls = [];
+    if (isFolder) {
+        let bookmarks = await browser.bookmarks.getChildren(bookmarkId);
+        urls = bookmarks.map(b => b.url).filter(url => url);
+    } else if (bookmark.url) {
+        urls.push(bookmark.url);
+    }
+    // Filter URLs that we certainly don't want to open.
+    // - Bookmarklets (javascript:) aren't supported.
+    // - "Most Visited" has type "bookmark" with url = "place:sort=8&maxResults=10".
+    urls = urls.filter(url => !/^(javascript|place):/i.test(url));
+    return {urls, isFolder};
+}
+
+async function updateRootMenuItem(bookmarkId) {
+    let urls, isFolder;
+    try {
+        ({urls, isFolder} = await getBookmarkUrls(bookmarkId));
+    } catch (e) {
+        urls = [];
+        isFolder = false;
+    }
+    let title;
+    if (isFolder) {
+        // TODO: i18n
+        title = "Open All in Container Tabs";
+    } else {
+        // TODO: i18n
+        title = "Open in New Container Tab";
+    }
+    browser.menus.update(BOOKMARK_MENU_ITEM_ID, {
+        title,
+        enabled: urls.length > 0,
+    });
+}
 
 async function updateBookmarkMenuItems() {
     let cids = await browser.contextualIdentities.query({});
