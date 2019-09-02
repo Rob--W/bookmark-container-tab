@@ -1,7 +1,7 @@
 {
     "name": "Open bookmark in Container Tab menu item",
     "description": "Add 'Open in Container Tab' menu item to bookmarks",
-    "version": "1.1",
+    "version": "1.2",
     "manifest_version": 2,
     "background": {
         "scripts": ["background.js"]
