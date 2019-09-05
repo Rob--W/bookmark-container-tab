@@ -183,6 +183,8 @@ async function updateBookmarkMenuItems() {
         }
         lastIds.length = firstI;
         cids = cids.slice(firstI);
+    } else if (lastIds.length < cids.length) {
+        cids = cids.slice(lastIds.length);
     }
 
     // Append new ones.
