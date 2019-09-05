@@ -176,7 +176,7 @@ async function updateBookmarkMenuItems() {
     // Keep all menu items at the start that haven't been changed,
     // remove all others and then append new ones.
 
-    let firstI = lastIds.findIndex((id, i) => cids[i].cookieStoreId !== id);
+    let firstI = lastIds.findIndex((id, i) => !cids[i] || cids[i].cookieStoreId !== id);
     if (firstI !== -1) {
         for (let i = firstI; i < lastIds.length; ++i) {
             browser.menus.remove(lastIds[i]);
