@@ -109,7 +109,7 @@ function createRootMenuItems() {
         id: BOOKMARK_MENU_ITEM_ID,
         contexts: ["bookmark"],
         // TODO: i18n.
-        title: "Open in New Container Tab",
+        title: "Open in a New Container Tab",
     });
     browser.menus.create({
         id: "firefox-default",
