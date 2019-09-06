@@ -157,7 +157,7 @@ async function updateRootMenuItem(bookmarkId) {
         title = "Open All in Container Tabs";
     } else {
         // TODO: i18n
-        title = "Open in New Container Tab";
+        title = "Open in a New Container Tab";
     }
     browser.menus.update(BOOKMARK_MENU_ITEM_ID, {
         title,
