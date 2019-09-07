@@ -108,15 +108,13 @@ function createRootMenuItems() {
     browser.menus.create({
         id: BOOKMARK_MENU_ITEM_ID,
         contexts: ["bookmark"],
-        // TODO: i18n.
-        title: "Open in a New Container Tab",
+        title: browser.i18n.getMessage("open_one_in_container_tab"),
     });
     browser.menus.create({
         id: "firefox-default",
         parentId: BOOKMARK_MENU_ITEM_ID,
         contexts: ["bookmark"],
-        // TODO: i18n.
-        title: "No Container",
+        title: browser.i18n.getMessage("no_container"),
     });
     browser.menus.create({
         id: "separator-after-no-container",
@@ -153,11 +151,9 @@ async function updateRootMenuItem(bookmarkId) {
     }
     let title;
     if (isFolder) {
-        // TODO: i18n
-        title = "Open All in Container Tabs";
+        title = browser.i18n.getMessage("open_all_in_container_tab");
     } else {
-        // TODO: i18n
-        title = "Open in a New Container Tab";
+        title = browser.i18n.getMessage("open_one_in_container_tab");
     }
     browser.menus.update(BOOKMARK_MENU_ITEM_ID, {
         title,

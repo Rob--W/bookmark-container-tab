@@ -1,6 +1,7 @@
 {
-    "name": "Open bookmark in Container Tab menu item",
-    "description": "Add 'Open in Container Tab' menu item to bookmarks",
+    "name": "__MSG_extensionName__",
+    "description": "__MSG_extensionDescription__",
+    "default_locale": "en-US",
     "version": "1.2",
     "manifest_version": 2,
     "background": {
