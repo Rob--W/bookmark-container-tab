@@ -18,7 +18,13 @@ browser.menus.onClicked.addListener(async (info) => {
     // - file:-URLs - https://bugzil.la/1266960
     // - data:-URLs - https://bugzil.la/1317166
     // - about:-URLs (other than about:blank)
+
+    // The number of tabs that are actively loaded. If the number of tabs to
+    // open exceed this number, they will lazily be loaded instead.
+    let discardThreshold = 10;
+    let i = -1;
     for (let url of urls) {
+        ++i;
         let openInReaderMode = url.startsWith("about:reader");
         if (openInReaderMode) {
             try {
@@ -28,11 +34,26 @@ browser.menus.onClicked.addListener(async (info) => {
                 console.warn(`Failed to parse: ${url} ${e}`);
             }
         }
-        browser.tabs.create({
+        let createProperties = {
+            active: i === 0,
             url,
             cookieStoreId: info.menuItemId,
             openInReaderMode,
-        });
+        };
+        if (i + 1 >= discardThreshold) {
+            createProperties.discarded = true;
+        }
+        try {
+            browser.tabs.create(createProperties);
+        } catch (e) {
+            // discard supported since Firefox 63 - https://bugzil.la/1378647
+            if (e.message.includes("Unexpected property \"discarded\"")) {
+                // Don't try to discard another tab if not supported.
+                discardThreshold = Infinity;
+                delete createProperties.discarded;
+                browser.tabs.create(createProperties);
+            }
+        }
     }
 });
 
