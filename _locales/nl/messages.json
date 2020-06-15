@@ -1,0 +1,14 @@
+{
+    "extensionDescription": {
+        "message": "Voegt 'Openen in een nieuw containertabblad' toe aan het menu van bladwijzers"
+    },
+    "open_one_in_container_tab": {
+        "message": "Openen in een nieuw containertabblad"
+    },
+    "open_all_in_container_tab": {
+        "message": "Alle openen in containertabbladen"
+    },
+    "no_container": {
+        "message": "Geen container"
+    }
+}
