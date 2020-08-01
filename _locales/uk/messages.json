@@ -1,0 +1,18 @@
+{
+    "extensionDescription": {
+        "message": "Додати для закладок пункт меню 'Відкрити в контейнері'",
+        "description": "Short description of the extension."
+    },
+    "open_one_in_container_tab": {
+        "message": "Відкрити в контейнері",
+        "description": "Label of item in the context menu of a bookmark. Language and capitalization should be consistent with built-in menu items such as 'Open in a New Tab'."
+    },
+    "open_all_in_container_tab": {
+        "message": "Відкрити все в контейнері",
+        "description": "Label of item in the context menu of a bookmark folder. Language and capitalization should be consistent with built-in menu items such as 'Open All in Tabs'."
+    },
+    "no_container": {
+        "message": "Без контейнера",
+        "description": "Label of item in the submenu of the 'Open ... in Container' menu item."
+    }
+}
