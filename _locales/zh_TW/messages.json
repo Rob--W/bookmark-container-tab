@@ -1,0 +1,14 @@
+{
+    "extensionDescription": {
+        "message": "於書籤選單內新增「用容器分頁開啟」"
+    },
+    "open_one_in_container_tab": {
+        "message": "用新容器分頁開啟"
+    },
+    "open_all_in_container_tab": {
+        "message": "全部用容器分頁開啟"
+    },
+    "no_container": {
+        "message": "無容器"
+    }
+}
